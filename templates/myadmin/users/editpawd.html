@@ -1,0 +1,69 @@
+{% extends "myadmin/base.html" %}
+{% load static from staticfiles %}
+{% block main_js_css %}
+<script src="{% static 'myadmin/js/jquery.min.js' %}"></script>
+<script type="text/javascript">
+	$(function(){
+		$("#mybtu").click(function(){
+			var one=$("#input_01").attr("value");
+			var two=$("#input_02").attr("value");
+			if(one!=two){
+				alert("密码不一致，请重新输入！");
+				return false;
+			}
+			else{
+				return true;
+			}
+		});
+	});
+</script>
+{% endblock %}
+
+{% block mainbody %}
+    <div class="row">
+	<div class="span9">
+		<h1>
+			会员密码重置
+		</h1>
+		<form id="edit-profile" class="form-horizontal" method="post" action="{% url 'myadmin_user_updatepawd' %}">
+			{% csrf_token %}
+			<fieldset>
+				<legend>当前编辑窗口</legend>
+				<input type="hidden" name="txt_id" value="{{list.id}}" class="input-xlarge" id="input01" />
+				<div class="control-group">
+					<label class="control-label" for="input01">账号:</label>
+					<div class="controls">
+						<input type="text" name="txt_user" value="{{list.username}}" class="input-xlarge" id="input01" disabled="true" />
+					</div>
+				</div>
+
+				<div class="control-group">
+					<label class="control-label" for="input01">真实姓名:</label>
+					<div class="controls">
+						<input type="text" name="txt_name" value="{{list.name}}" class="input-xlarge" id="input01" disabled="true" />
+					</div>
+				</div>
+
+				<div class="control-group">
+					<label class="control-label" for="input01">密码:</label>
+					<div class="controls">
+						<input type="password" name="password" class="input-xlarge" id="input_01" />
+					</div>
+				</div>
+				<div class="control-group">
+					<label class="control-label" for="input01">重复密码:</label>
+					<div class="controls">
+						<input type="password" name="repassword" class="input-xlarge" id="input_02" />
+					</div>
+				</div>
+
+				<div style="margin-left: 180px;">
+					<button id="mybtu" type="submit" class="btn btn-primary" style="width: 100px;">保存</button>
+					<button type="reset" class="btn" style="margin-left: 5px;">重置</button>
+				</div>
+
+			</fieldset>
+		</form>
+	</div>
+</div>
+{% endblock %}
