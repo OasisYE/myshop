@@ -28,7 +28,7 @@
     {% block mylink %}
     {% endblock %}
     <script type="text/javascript" src="{% static 'web/js/rem.js' %}"></script>
-    <script type="text/javascript" src="{% static 'web/js/topNav.js' %}"></script>
+    <script type="text/javascript" src="{% static 'web/js/topNav.js' %}?id=888"></script>
 
 </head>
 <body>
@@ -55,7 +55,7 @@
               <a href="#" class="layout-user-downmenu-link" data-mtype="wmz_public_grzx_myorder">个人中心</a>
             </li>
             <li class="layout-user-downmenu-item">
-              <a href="#" class="layout-user-downmenu-link" data-mtype="wmz_public_grzx_myorder">我的订单</a>
+              <a href="{% url 'vip_orders' %}" class="layout-user-downmenu-link" data-mtype="wmz_public_grzx_myorder">我的订单</a>
             </li>
             <li class="layout-user-downmenu-item">
               <a href="{% url 'logout' %}" class="layout-user-downmenu-link" data-mtype="wmz_public_grzx_mformy">退出</a>
@@ -72,9 +72,11 @@
         </div>
     </li>
             <li class="layout-header-service-item layout-header-service-cart" id="layoutHeaderCart">
-                <a class="layout-header-service-link" href="#" data-mtype="wmz_public_yt_cart">
+                <a class="layout-header-service-link" href="{% url 'cart_index' %}" data-mtype="wmz_public_yt_cart">
                     <i class="glyphicon glyphicon-shopping-cart"></i>
-                    <span class="layout-header-service-cart-num">0</span>
+                    <span class="layout-header-service-cart-num">
+                        {{ request.session.shoplist.values|length }}
+                    </span>
                 </a>
             </li>
           </ul>
