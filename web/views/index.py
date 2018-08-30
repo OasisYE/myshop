@@ -18,6 +18,10 @@ def loadinfo(request):
 def index(request):
     '''项目前台首页'''
     context = loadinfo(request)
+    # 获取点击量前5名的商品
+    hotgoods = Goods.objects.all().order_by('-clicknum')[:5]
+    # 封装信息加载模板输出
+    context['hotlist'] = hotgoods
     return render(request,"web/index.html",context)
 
 def lists(request,pIndex=1):
@@ -114,3 +118,38 @@ def logout(request):
     del request.session['vipuser']
     # 跳转登录页面（url地址改变）
     return redirect(reverse('login'))
+
+def register(request):
+	'''会员注册页面'''
+	return render(request,"web/register.html")
+
+def doregister(request):
+	'''执行会员注册操作'''
+	#获取并判断用户名是否为空
+	username = request.POST['username']
+	if len(username) == 0:
+		context = {"info":"用户名不能为空！"}
+		return render(request,"web/register.html",context)
+	#获取并判断两次输入的密码是否一致
+	password = request.POST['password']
+	repassword = request.POST['repassword']
+	if password != repassword:
+		context = {"info":"两次输入的密码不一致！"}
+		return render(request,"web/register.html",context)
+	try:
+		#实例化对象
+		ob = Users()
+		#用ob进行封装
+		ob.username = request.POST['username']
+		#获取密码并进行MD5加密操作
+		import hashlib
+		m = hashlib.md5()
+		m.update(bytes(request.POST['password'],encoding="utf8"))
+		ob.password = m.hexdigest()
+		ob.state = 1
+		ob.save()
+		context = {"info":"注册成功，请点击登录！"}
+	except Exception as err:
+		print(err)
+		context = {"info":"用户名已存在，请重新输入!"}
+	return render(request,"web/register.html",context)

@@ -27,14 +27,19 @@ urlpatterns = [
     url(r'^login$', index.login, name="login"),
     url(r'^dologin$', index.dologin, name="dologin"),
     url(r'^logout$', index.logout, name="logout"),
+    url(r'^register$', index.register, name="register"),
+    url(r'^doregister$', index.doregister, name="doregister"),
 
     # 会员中心
     url(r'^vip/orders$', vip.viporders,name='vip_orders'), #会员中心我的订单
     url(r'^vip/odstate$', vip.odstate,name='vip_odstate'), #修改订单状态（确认收货）
+    url(r'^vip/vipcenter$', vip.vipcenter,name='vip_center'), #会员中心的个人信息
     #url(r'^vip/info$', vip.info,name='vip_info'), #会员中心的个人信息
-    #url(r'^vip/update$', vip.update,name='vip_update'), #执行修改会员信息
-    #url(r'^vip/resetps$', vip.resetps,name='vip_resetps'), #重置密码表单
-    #url(r'^vip/doresetps$', vip.doresetps,name='vip_doresetps'), #执行重置密码
+    url(r'^vip/update$', vip.update,name='vip_update'), #执行修改会员信息
+    url(r'^vip/resetps$', vip.resetps,name='vip_resetps'), #重置密码表单
+    url(r'^vip/doresetps$', vip.doresetps,name='vip_doresetps'), #执行重置密码
+
+
 
     # 购物车路由
     url(r'^cart$', cart.index,name='cart_index'), #浏览购物车

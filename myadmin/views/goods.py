@@ -96,6 +96,10 @@ def insert(request):
 
         # 执行图片缩放
         im = Image.open("./static/goods/"+filename)
+        # 2880*480 首页长图
+        im.thumbnail((2880, 480))
+        im.save("./static/goods/l_" + filename, 'jpeg')
+
         # 缩放到375*375:
         im.thumbnail((375, 375))
         # 把缩放后的图像用jpeg格式保存:
